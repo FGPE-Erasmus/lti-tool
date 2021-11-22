@@ -4,6 +4,12 @@ const path = require('path')
 // Requiring Ltijs
 const lti = require('ltijs').Provider
 
+
+router.post('/teste', async(req, res) => {
+  console.log(res.locals.token);
+  return res.send(req.body.value)
+})
+
 // Grading route
 router.post('/grade', async (req, res) => {
   try {
@@ -100,6 +106,7 @@ router.get('/resources', async (req, res) => {
   return res.send(resources)
 })
 
+
 // Get user and context information
 router.get('/info', async (req, res) => {
   const token = res.locals.token
@@ -118,6 +125,6 @@ router.get('/info', async (req, res) => {
 })
 
 // Wildcard route to deal with redirecting to React routes
-router.get('*', (req, res) => res.sendFile(path.join(__dirname, '../public/index.html')))
+//router.get('*', (req, res) => res.sendFile(path.join(__dirname, '../public/index.html')))
 
 module.exports = router
