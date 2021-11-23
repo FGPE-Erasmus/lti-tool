@@ -39,7 +39,7 @@ console.log(routes);
 // Setup function
 const setup = async () => {
   console.log(process.env);
-  await lti.deploy({ port: process.env.LTI_TOOL_PORT })
+  await lti.deploy({ port: process.env.LTI_TOOL_PORT });
 
   /**
    * Register platform
