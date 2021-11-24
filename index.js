@@ -34,7 +34,6 @@ lti.onDeepLinking(async (token, req, res) => {
 
 // Setting up routes
 lti.app.use(routes)
-console.log(routes);
 
 // Setup function
 const setup = async () => {

@@ -5,11 +5,21 @@ const getLtik = () => {
   return ltik;
 };
 
+const createForm = async () => {
+  console.log("creating form");
+  const body = {
+    ltik: getLtik(),
+  };
+  $.post("/lti-tool/deeplink", body, function (form) {
+    $('#bodyForm').append(form)
+  });
+};
+
 const getMembers = async () => {
   const body = {
     ltik: getLtik(),
   };
-  $.get("/lti-tool/members", body, function (result) {
+  $.post("/lti-tool/members", body, function (result) {
     for(const x of result){
       var name = x.name;
       var email = x.email;
@@ -28,6 +38,7 @@ const setGrade = async (userIdToken) => {
   };
 
   $.post("/lti-tool/grade", body, function (result) {
-    alert(result);
+    alert("done");
+    console.log(result);
   });
 };

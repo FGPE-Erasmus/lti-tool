@@ -4,12 +4,6 @@ const path = require('path')
 // Requiring Ltijs
 const lti = require('ltijs').Provider
 
-
-router.post('/teste', async(req, res) => {
-  console.log(res.locals.token);
-  return res.send(req.body.value)
-})
-
 // Grading route
 router.post('/grade', async (req, res) => {
   console.log(req.body.userId + " " + req.body.grade);
@@ -54,7 +48,7 @@ router.post('/grade', async (req, res) => {
 })
 
 // Names and Roles route
-router.get('/members', async (req, res) => {
+router.post('/members', async (req, res) => {
   try {
     const result = await lti.NamesAndRoles.getMembers(res.locals.token)
     if (result) return res.send(result.members)
@@ -65,19 +59,23 @@ router.get('/members', async (req, res) => {
   }
 })
 
-// Deep linking route
+// Handles deep linking request generation with the selected resource
 router.post('/deeplink', async (req, res) => {
+  console.log("POST DEEP LINKING");
   try {
     const resource = req.body
 
-    const items = {
-      type: 'ltiResourceLink',
-      title: 'Ltijs Demo',
-      custom: {
-        name: resource.name,
-        value: resource.value
+    const items = [
+      {
+        type: 'ltiResourceLink',
+        title: "titulo",
+        url: "/lti-tool/members.html",
+        custom: {
+          resourceurl: "/lti-tool/members.html",
+          resourcename: "titulo"
+        }
       }
-    }
+    ]
 
     const form = await lti.DeepLinking.createDeepLinkingForm(res.locals.token, items, { message: 'Successfully Registered' })
     if (form) return res.send(form)
@@ -86,6 +84,23 @@ router.post('/deeplink', async (req, res) => {
     console.log(err.message)
     return res.status(500).send(err.message)
   }
+})
+
+// Handles deep linking resources get requests
+router.get('/deeplinkresources', async (req, res) => {
+  console.log(path.join(__dirname, '../public/resources.html'));
+  return res.sendFile(path.join(__dirname, '../public/resources.html'));
+})
+
+// Handles deep linking resources post requests
+router.post('/deeplinkresources', async (req, res) => {
+  console.log(path.join(__dirname, '../public/resources.html'));
+  return res.sendFile(path.join(__dirname, '../public/resources.html'));
+})
+
+// Handles deep linking get requests
+router.get('/members', async (req, res) => {
+  return res.sendFile(path.join(__dirname, '../public/members.html'));
 })
 
 // Return available deep linking resources
