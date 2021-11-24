@@ -12,12 +12,13 @@ router.post('/teste', async(req, res) => {
 
 // Grading route
 router.post('/grade', async (req, res) => {
+  console.log(req.body.userId + " " + req.body.grade);
   try {
     const idtoken = res.locals.token // IdToken
     const score = req.body.grade // User numeric score sent in the body
     // Creating Grade object
     const gradeObj = {
-      userId: idtoken.user,
+      userId: req.body.userId,
       scoreGiven: score,
       scoreMaximum: 100,
       activityProgress: 'Completed',

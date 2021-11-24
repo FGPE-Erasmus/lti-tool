@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        <link rel="stylesheet" href="css/styles.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -9,11 +10,9 @@
         <title>LTI Tool test</title>
     </head>
     <body>
-        <h3>Nota:</h3>
-        <input name="input_teste" type="number" min="0" max="100">
-        <input type="button" onclick="setGrade(document.getElementsByName('input_teste')[0].value)">
-
-        <h1 name="texto"></h1>
+        <a onclick="window.location='lti-tool/members.html'+window.location.search;" >Members</a>
+        <br>
+        <a onclick="window.location='lti-tool/grade.html'+window.location.search;">Grade</a>
     </body>
 </html>
-<script src="/lti-tool/js/scripts.js"></script>
+<script src="js/scripts.js"></script>

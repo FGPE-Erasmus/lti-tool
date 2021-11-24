@@ -5,15 +5,27 @@ const getLtik = () => {
   return ltik;
 };
 
-const setGrade = async (value) => {
+const getMembers = async () => {
   const body = {
     ltik: getLtik(),
-    value: value,
   };
-
-  $.post("/lti-tool/teste", body, function (result) {
-    alert(result);
+  $.get("/lti-tool/members", body, function (result) {
+    for(const x of result){
+      var name = x.name;
+      var email = x.email;
+      var roles = x.roles;
+      var userId = x.user_id;
+      $("#members_table").find('tbody').append("<tr><td>" + name + "</td><td>" + email + "</td><td>" + roles + "</td><td><input type='num' id='grade"+ userId + "'> <br> <input type='button' value='Submit grade' id='" + userId + "' onclick=setGrade('" + userId + "')></td></tr>");
+    }
   });
+};
+
+const setGrade = async (userIdToken) => {
+  const body = {
+    ltik: getLtik(),
+    grade: $("#grade" + userIdToken).val(),
+    userId: userIdToken,
+  };
 
   $.post("/lti-tool/grade", body, function (result) {
     alert(result);
