@@ -86,21 +86,12 @@ router.post('/deeplink', async (req, res) => {
   }
 })
 
-// Handles deep linking resources get requests
-router.get('/deeplinkresources', async (req, res) => {
-  console.log(path.join(__dirname, '../public/resources.html'));
-  return res.sendFile(path.join(__dirname, '../public/resources.html'));
-})
-
-// Handles deep linking resources post requests
-router.post('/deeplinkresources', async (req, res) => {
-  console.log(path.join(__dirname, '../public/resources.html'));
-  return res.sendFile(path.join(__dirname, '../public/resources.html'));
-})
-
-// Handles deep linking get requests
 router.get('/members', async (req, res) => {
   return res.sendFile(path.join(__dirname, '../public/members.html'));
+})
+
+router.get('/home', async (req, res) => {
+  return res.sendFile(path.join(__dirname, '../public/index.html'));
 })
 
 // Return available deep linking resources

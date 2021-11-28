@@ -1,3 +1,5 @@
+
+
 const getLtik = () => {
   const searchParams = new URLSearchParams(window.location.search);
   const ltik = searchParams.get("ltik");
@@ -11,8 +13,21 @@ const createForm = async () => {
     ltik: getLtik(),
   };
   $.post("/lti-tool/deeplink", body, function (form) {
-    $('#bodyForm').append(form)
+    $('#resources').append(form)
   });
+};
+
+const checkDeeplinking = async () => {
+  const searchParams = new URLSearchParams(window.location.search);
+  const deeplinking = searchParams.get("deeplinking");
+  if(deeplinking == "1"){
+    $("#home").hide();
+    $("#resources").show();
+    createForm();
+  } else {
+    $("#home").show();
+    $("#resources").hide();
+  }
 };
 
 const getMembers = async () => {
