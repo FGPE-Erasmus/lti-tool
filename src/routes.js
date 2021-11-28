@@ -69,9 +69,9 @@ router.post('/deeplink', async (req, res) => {
       {
         type: 'ltiResourceLink',
         title: "titulo",
-        url: "/lti-tool/members.html",
+        url: "/members.html",
         custom: {
-          resourceurl: "/lti-tool/members.html",
+          resourceurl: "/members.html",
           resourcename: "titulo"
         }
       }

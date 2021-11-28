@@ -1,4 +1,6 @@
 require('dotenv').config()
+
+const express = require('express');
 const path = require('path')
 const routes = require('./src/routes')
 
@@ -29,7 +31,7 @@ lti.onConnect(async (token, req, res) => {
 
 // When receiving deep linking request redirects to deep screen
 lti.onDeepLinking(async (token, req, res) => {
-  return lti.redirect(res, '/deeplink', { newResource: true })
+  return lti.redirect(res, '/lti-tool/deeplink', { newResource: true })
 })
 
 // Setting up routes
@@ -38,7 +40,11 @@ lti.app.use(routes)
 // Setup function
 const setup = async () => {
   console.log(process.env);
-  await lti.deploy({ port: process.env.LTI_TOOL_PORT });
+  await lti.deploy({ serverless: true });
+
+  const app = express();
+  app.use("/lti-tool", lti.app);
+  app.listen(process.env.LTI_TOOL_PORT);
 
   /**
    * Register platform
