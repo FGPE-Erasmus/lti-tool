@@ -4,6 +4,12 @@ const path = require('path')
 // Requiring Ltijs
 const lti = require('ltijs').Provider
 
+router.post('/getGrade', async (req, res) => {
+  const idtoken = res.locals.token
+  const response = await lti.Grade.getScores(idtoken, idtoken.platformContext.endpoint.lineitem, { userId: req.body.userId })
+  return res.send(response)
+})
+
 // Grading route
 router.post('/grade', async (req, res) => {
   console.log(req.body.userId + " " + req.body.grade);
@@ -68,12 +74,8 @@ router.post('/deeplink', async (req, res) => {
     const items = [
       {
         type: 'ltiResourceLink',
-        title: "titulo",
-        url: "/members.html",
-        custom: {
-          resourceurl: "/members.html",
-          resourcename: "titulo"
-        }
+        title: resource.title,
+        url: "https://fgpe.dcc.fc.up.pt/lti-tool/" + resource.title,
       }
     ]
 
@@ -92,6 +94,14 @@ router.get('/members', async (req, res) => {
 
 router.get('/home', async (req, res) => {
   return res.sendFile(path.join(__dirname, '../public/index.html'));
+})
+
+router.get('/example', async (req, res) => {
+  return res.sendFile(path.join(__dirname, '../public/example.html'));
+})
+
+router.get('/deeplinking', async (req, res) => {
+  return res.sendFile(path.join(__dirname, '../public/resources.html'));
 })
 
 // Return available deep linking resources
